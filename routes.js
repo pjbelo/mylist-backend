@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const controllerCategory = require("./controllers/category.controller.js");
 const controllerState = require("./controllers/state.controller.js");
+const controllerList = require("./controllers/list.controller.js");
 
 // ----------------------------  Home ----------------------------
 router.get("/", (req, res) =>
@@ -20,5 +21,12 @@ router.get("/states/:id", controllerState.readID);
 router.post("/states", controllerState.create);
 router.put("/states/:id", controllerState.update);
 router.delete("/states/:id", controllerState.deleteF);
+
+// ----------------------------  List ----------------------------
+router.get("/list", controllerList.read);
+router.get("/list/:id", controllerList.readID);
+router.post("/list", controllerList.create);
+router.put("/list/:id", controllerList.update);
+router.delete("/list/:id", controllerList.deleteF);
 
 module.exports = router;
