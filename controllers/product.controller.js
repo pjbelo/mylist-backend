@@ -25,6 +25,30 @@ function read(req, res) {
   );
 }
 
+// read products, showing category name
+function read2(req, res) {
+  const sqlquery =
+    "SELECT product.*, category.name AS category_name FROM product " +
+    "LEFT JOIN category ON product.category_id = category.category_id " +
+    "ORDER BY product.category_id ASC";
+  const query = connect.con.query(sqlquery, function (err, rows, fields) {
+    console.log(query.sql);
+    console.log(rows);
+    if (err) {
+      console.log(err);
+      res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+    } else {
+      if (rows.length == 0) {
+        res
+          .status(jsonMessages.db.noRecords.status)
+          .send(jsonMessages.db.noRecords);
+      } else {
+        res.send(rows);
+      }
+    }
+  });
+}
+
 // read product with id x
 function readID(req, res) {
   const product_id = req.sanitize("id").escape();
@@ -118,7 +142,14 @@ function update(req, res) {
       typeof name != "undefined" &&
       typeof category_id != "undefined"
     ) {
-      const sqlvalues = [name, photo, description, alternatives, category_id, product_id];
+      const sqlvalues = [
+        name,
+        photo,
+        description,
+        alternatives,
+        category_id,
+        product_id,
+      ];
       const query = connect.con.query(
         "UPDATE product SET name=?, photo=?, description=?, alternatives=?, category_id=? WHERE product_id=?",
         sqlvalues,
@@ -167,6 +198,7 @@ function deleteF(req, res) {
 
 module.exports = {
   read: read,
+  read2: read2,
   readID: readID,
   create: create,
   update: update,

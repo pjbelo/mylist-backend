@@ -25,6 +25,7 @@ router.delete("/states/:id", controllerState.deleteF);
 
 // ----------------------------  Products ----------------------------
 router.get("/products", controllerProduct.read);
+router.get("/products2", controllerProduct.read2);
 router.get("/products/:id", controllerProduct.readID);
 router.post("/products", controllerProduct.create);
 router.put("/products/:id", controllerProduct.update);
