@@ -2,6 +2,7 @@ const router = require("express").Router();
 const controllerCategory = require("./controllers/category.controller.js");
 const controllerState = require("./controllers/state.controller.js");
 const controllerList = require("./controllers/list.controller.js");
+const controllerProduct = require("./controllers/product.controller.js");
 
 // ----------------------------  Home ----------------------------
 router.get("/", (req, res) =>
@@ -21,6 +22,13 @@ router.get("/states/:id", controllerState.readID);
 router.post("/states", controllerState.create);
 router.put("/states/:id", controllerState.update);
 router.delete("/states/:id", controllerState.deleteF);
+
+// ----------------------------  Products ----------------------------
+router.get("/products", controllerProduct.read);
+router.get("/products/:id", controllerProduct.readID);
+router.post("/products", controllerProduct.create);
+router.put("/products/:id", controllerProduct.update);
+router.delete("/products/:id", controllerProduct.deleteF);
 
 // ----------------------------  List ----------------------------
 router.get("/list", controllerList.read);
