@@ -2,7 +2,7 @@ const jsonMessagesPath = __dirname + "/../assets/jsonMessages/";
 const jsonMessages = require(jsonMessagesPath + "bd");
 const connect = require("../config/connectMySQL");
 
-// read categories
+// read list
 function read(req, res) {
   const query = connect.con.query(
     "SELECT list_id, product_id, state_id FROM list ORDER BY list_id DESC",
@@ -23,6 +23,32 @@ function read(req, res) {
       }
     }
   );
+}
+
+// read list with names from products and state
+function read2(req, res) {
+  sqlquery =
+    "SELECT list.list_id, list.product_id, product.name, product.photo, product.description, " +
+    "product.alternatives, product.category_id, category.name AS category_name, list.state_id, state.name AS state_name " +
+    "FROM list " +
+    "LEFT JOIN product ON list.product_id = product.product_id " +
+    "LEFT JOIN state ON list.state_id = state.state_id " +
+    "LEFT JOIN category ON product.category_id = category.category_id " +
+    "ORDER BY list_id DESC";
+  const query = connect.con.query(sqlquery, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+    } else {
+      if (rows.length == 0) {
+        res
+          .status(jsonMessages.db.noRecords.status)
+          .send(jsonMessages.db.noRecords);
+      } else {
+        res.send(rows);
+      }
+    }
+  });
 }
 
 // read list item with id x
@@ -158,6 +184,7 @@ function deleteF(req, res) {
 
 module.exports = {
   read: read,
+  read2: read2,
   readID: readID,
   create: create,
   update: update,
