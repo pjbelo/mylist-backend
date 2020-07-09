@@ -1,0 +1,22 @@
+{
+  "name": "mylist-backend",
+  "version": "1.0.0",
+  "description": "myList API backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pjbelo/mylist-backend.git"
+  },
+  "author": "Paulo Belo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pjbelo/mylist-backend/issues"
+  },
+  "homepage": "https://github.com/pjbelo/mylist-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
