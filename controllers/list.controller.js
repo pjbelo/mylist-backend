@@ -55,7 +55,7 @@ function read2(req, res) {
 function readID(req, res) {
   const list_id = req.sanitize("id").escape();
   const query = connect.con.query(
-    "SELECT list_id, product_id, state_id FROM list where list_id = ? ",
+    "SELECT list_id, product_id, state_id FROM list WHERE list_id = ? ",
     list_id,
     function (err, rows, fields) {
       console.log(query.sql);
@@ -76,6 +76,34 @@ function readID(req, res) {
     }
   );
 }
+
+// read list item with id x with names from products and state
+function readID2(req, res) {
+  const list_id = req.sanitize("id").escape();
+  sqlquery =
+    "SELECT list.list_id, list.product_id, product.name, product.photo, product.description, " +
+    "product.alternatives, product.category_id, category.name AS category_name, list.state_id, state.name AS state_name " +
+    "FROM list " +
+    "LEFT JOIN product ON list.product_id = product.product_id " +
+    "LEFT JOIN state ON list.state_id = state.state_id " +
+    "LEFT JOIN category ON product.category_id = category.category_id " +
+    "WHERE list_id = ?";
+  const query = connect.con.query(sqlquery, list_id, function (err, rows, fields) {
+    if (err) {
+      console.log(err);
+      res.status(jsonMessages.db.dbError.status).send(jsonMessages.db.dbError);
+    } else {
+      if (rows.length == 0) {
+        res
+          .status(jsonMessages.db.noRecords.status)
+          .send(jsonMessages.db.noRecords);
+      } else {
+        res.send(rows);
+      }
+    }
+  });
+}
+
 
 // create list item
 function create(req, res) {
@@ -186,6 +214,7 @@ module.exports = {
   read: read,
   read2: read2,
   readID: readID,
+  readID2: readID2,
   create: create,
   update: update,
   deleteF: deleteF,

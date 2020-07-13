@@ -35,6 +35,7 @@ router.delete("/products/:id", controllerProduct.deleteF);
 router.get("/list", controllerList.read);
 router.get("/list2", controllerList.read2);
 router.get("/list/:id", controllerList.readID);
+router.get("/list2/:id", controllerList.readID2);
 router.post("/list", controllerList.create);
 router.put("/list/:id", controllerList.update);
 router.delete("/list/:id", controllerList.deleteF);
