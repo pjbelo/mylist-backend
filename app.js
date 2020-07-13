@@ -18,6 +18,12 @@ app.set("trust proxy", 1);
 app.use(expressValidator());
 app.use("/", router);
 
+app.use(
+  cors({
+    exposedHeaders: ["Location"],
+  })
+);
+
 app.listen(port, function (err) {
   if (!err) {
     console.log("App listening on " + host + " and port " + port);
