@@ -12,17 +12,17 @@ const expressSanitizer = require("express-sanitizer");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 
-app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
-app.use(expressSanitizer());
-app.set("trust proxy", 1);
-app.use(expressValidator());
-app.use("/", router);
-
 app.use(
   cors({
     exposedHeaders: ["Location"],
   })
 );
+
+app.use(bodyParser.json(), bodyParser.urlencoded({ extended: true }));
+app.use(expressSanitizer());
+app.set("trust proxy", 1);
+app.use(expressValidator());
+app.use("/", router);
 
 app.listen(port, function (err) {
   if (!err) {
